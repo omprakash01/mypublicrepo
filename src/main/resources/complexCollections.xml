@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/util 
+     http://www.springframework.org/schema/util/spring-util.xsd"> <!-- bean definitions here -->
+
+	<bean id="myDataSource" class="spring_example_1_4_DI.BasicDataSource">
+	    <!-- results in a setDriverClassName(String) call -->
+	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	    <property name="url" value="jdbc:mysql://localhost:3306/mydb"/>
+	    <property name="username" value="root"/>
+	    <property name="password" value="masterkaoli"/>
+	</bean>
+
+	<bean id="complex_object" class="spring_example_1_4_DI.ComplexCollectionBean">
+		<!-- results in a setSomeList(java.util.List) call -->
+		<property name="list1">
+			<list>
+				<value>a list element followed by a reference</value>
+				<ref bean="myDataSource" />
+			</list>
+		</property>
+		<!-- results in a setSomeMap(java.util.Map) call -->
+ 		<property name="map1">
+			<map>
+            	<entry key="an entry" value="just some string"/>
+            	<entry key ="a ref" value-ref="myDataSource"/>
+       	 	</map>
+       	</property>
+	</bean>
+	
+    <bean id="parent" abstract="true" class="spring_example_1_4_DI.ComplexCollectionBean">
+        <property name="adminEmails">
+            <props>
+                <prop key="administrator">administrator@example.com</prop>
+                <prop key="support">support@example.com</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="child_complex_object" parent="parent">
+        <property name="adminEmails">
+            <!-- the merge is specified on the child collection definition -->
+            <props merge="true">
+                <prop key="sales">sales@example.com</prop>
+                <prop key="support">support@example.co.uk</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

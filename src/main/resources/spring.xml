@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/util 
+     http://www.springframework.org/schema/util/spring-util.xsd"> <!-- bean definitions here -->
+
+	<bean id="vehicle_bike" class="spring_example_1_1_Ioc.Bike">
+	</bean>
+
+	<bean id="vehicle_car" class="spring_example_1_1_Ioc.Car">
+	</bean>
+
+
+	<bean id="inheritedTestBean" abstract="true"
+		class="spring_example_1_1_Ioc.ParentBean">
+		<property name="name" value="parent" />
+		<property name="age" value="1" />
+	</bean>
+
+	<bean id="inheritsWithDifferentClass"
+		class="spring_example_1_1_Ioc.ChildBean"
+		parent="inheritedTestBean" >
+		<property name="name" value="override" />
+		<!-- the age property value of 1 will be inherited from parent -->
+	</bean>
+</beans>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="accountDao" class="spring_example_1_2_Container.JpaAccountDao">
+        <!-- additional collaborators and configuration for this bean go here -->
+                <property name="amount" value="5000" />
+        
+        
+    </bean>
+
+    <bean id="itemDao" class="spring_example_1_2_Container.JpaItemDao">
+        <!-- additional collaborators and configuration for this bean go here -->
+        
+                <property name="name" value="Om" />
+    </bean>
+
+    <!-- more bean definitions for data access objects go here -->
+    <bean id="beanOne" class="spring_example_1_2_Container.JpaAccountDao" depends-on="manager"/>
+	<bean id="manager" class="spring_example_1_2_Container.JpaItemDao" />
+
+</beans>

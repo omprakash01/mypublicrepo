@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/util 
+     http://www.springframework.org/schema/util/spring-util.xsd"> <!-- bean definitions here -->
+
+<!-- 	<context:annotation-config /> -->
+
+    <!-- services -->
+
+    <bean id="petStore" class="spring_example_1_2_Container.PetStoreServiceImpl">
+        <property name="accountDao" ref="accountDao"/>
+        <property name="itemDao" ref="itemDao"/>
+    </bean>
+
+	<!-- inner bean -->
+    <bean id="petStore2" class="spring_example_1_2_Container.PetStoreServiceImpl">
+        <property name="accountDao">
+        	<bean class="spring_example_1_2_Container.JpaAccountDao">
+                <property name="amount" value="7000" />
+	        </bean>
+        	
+      	</property>
+        <property name="itemDao">
+        	<bean class="spring_example_1_2_Container.JpaItemDao">
+                <property name="name" value="Om_2" />
+        	</bean>
+      	</property>
+    </bean>
+</beans>

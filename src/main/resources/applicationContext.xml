@@ -1,0 +1,107 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/util 
+     http://www.springframework.org/schema/util/spring-util.xsd"> <!-- bean definitions here -->
+
+	<bean id="HelloBean" class="spring_NestingAndAliasing.HelloBean">
+		<property name="name" value="world" />
+	</bean>
+	
+	<!-- Lazy-initialized Beans -->
+	<bean id="HelloBeanLazyInit" class="spring_NestingAndAliasing.HelloBean" lazy-init="true">
+		<property name="name" value="world" />
+	</bean>
+		
+	
+	
+	<!-- aliasing a bean -->
+	<alias name="HelloBean" alias="alias_hello_bean"/>
+	
+<!-- static nested class (inner class) in bean definition-->
+	<bean id="otherthing" class="spring_NestingAndAliasing.SomeThing$OtherThing" />
+	
+
+<!-- Instantiation with a Static Factory Method-->
+
+<bean id="clientServiceLoc"
+    class="spring_NestingAndAliasing.ClientService"
+    factory-method="createInstance"/>
+
+
+<!-- the factory bean, which contains a method called createInstance() -->
+<bean id="serviceLocator" class="spring_NestingAndAliasing.DefaultServiceLocator">
+    <!-- inject any dependencies required by this locator bean -->
+</bean>
+
+
+<!-- the bean to be created via the Non-Static factory bean -->
+
+<bean id="clientService"
+    factory-bean="serviceLocator"
+    factory-method="createClientServiceInstance"/>
+
+<bean id="accountService"
+    factory-bean="serviceLocator"
+    factory-method="createAccountServiceInstance"/>
+
+<!-- ======== -->
+
+<!-- DEPENDENCY INJECTION -->
+	<!-- Constructor Argument Resolution -->
+    <bean id="beanOne" class="spring_example_1_4_DI.ThingOne">
+        <constructor-arg ref="beanTwo"/>
+        <constructor-arg ref="beanThree"/>
+    </bean>
+    <bean id="beanTwo" class="spring_example_1_4_DI.ThingTwo"/>
+    <bean id="beanThree" class="spring_example_1_4_DI.ThingThree"/>
+
+	<!-- Constructor Argument Type  Matching -->
+	<bean id="exampleBean1" class="spring_example_1_4_DI.ArgumentResolutionBean">
+	    <constructor-arg type="int" value="7500000"/>
+	    <constructor-arg type="java.lang.String" value="42"/>
+	</bean>
+
+	<!-- Constructor Argument Type  Matching -->
+	<bean id="exampleBean2" class="spring_example_1_4_DI.ArgumentResolutionBean">
+	    <constructor-arg index="0" value="7500000"/>
+	    <constructor-arg index="1" value="42"/>
+	</bean>
+
+	<!-- Constructor Argument Type  Matching -->
+	<bean id="exampleBean3" class="spring_example_1_4_DI.ArgumentResolutionBean">
+	    <constructor-arg name="years" value="7500000"/>
+	    <constructor-arg name="ultimateAnswer" value="42"/>
+	</bean>	
+
+	<!-- Circular dependencies -->
+<!-- 	<bean id="circularA" class="spring_example_1_4_DI.CircularA">
+		 <constructor-arg index="0" ref="circularB"/>
+	</bean>
+	<bean id="circularB" class="spring_example_1_4_DI.CircularB">
+		 <constructor-arg index="0" ref="circularA"/>
+	</bean>
+ -->	
+	
+	
+	
+	
+	<!-- LifeCycle Callback -->
+	<bean id="exampleInitBean" class="spring_example_1_6_LifeCycle.InitCallBackBean" init-method="init"/>
+	
+	<bean id="exampleInitBean2" class="spring_example_1_6_LifeCycle.InitCallBackBean2"/>
+	
+	<bean id="exampleCleanupBean" class="spring_example_1_6_LifeCycle.DestroyCallBackBean" destroy-method="cleanup"/>
+	
+	<bean id="exampleDestroyBean" class="spring_example_1_6_LifeCycle.DestroyCallBackBean2"/>
+	
+	
+	<bean id="lifecycleProcessor" class="org.springframework.context.support.DefaultLifecycleProcessor">
+    <!-- timeout value in milliseconds -->
+    <property name="timeoutPerShutdownPhase" value="10000"/>
+    
+	</bean>
+	
+</beans>

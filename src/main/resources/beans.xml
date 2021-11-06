@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/lang
+        https://www.springframework.org/schema/lang/spring-lang.xsd">
+
+    <bean id = "message" class = "spring_example_1_8.Messenger"
+      init-method = "init" destroy-method = "destroy">
+      <property name = "message" value = "Hello World!"/>
+   </bean>
+
+   <bean class = "spring_example_1_8.InstantiationTracingBeanPostProcessor" />
+
+  <bean id="numberClass"
+       class="spring_example_1_8.CustomInitializationMethodNumberClass" 
+       init-method="initialize"/>
+
+	
+	 <bean id="w" class="java.lang.String">
+  </bean>
+
+  <bean id="allBeansLister" class="spring_example_1_8.AllBeansLister"/>
+	
+
+</beans>
